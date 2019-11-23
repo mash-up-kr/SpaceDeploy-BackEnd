@@ -1,4 +1,3 @@
-HELP.md
 !**/src/main/**
 !**/src/test/**
 
@@ -167,3 +166,5 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 .flattened-pom.xml
+
+application.properties
