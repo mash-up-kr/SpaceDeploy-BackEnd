@@ -8,18 +8,18 @@ import javax.persistence.*
 @Table(name = "DAILYLOG")
 data class ArticleEntity(@Id
                          @GeneratedValue(strategy = GenerationType.IDENTITY)
-                         @Column(name = "dailylog_id")
+//                         @Column(name = "dailylog_id")
                          var dailylogId: Int? = null,
                          var article: String? = null,
                          var emotion: Int,
                          var year: Int,
                          var month: Int,
                          var day: Int,
-                         @Column(name = "dailylog_create_time")
+//                         @Column(name = "dailylog_create_time")
                          var dailylogCreateTime: LocalDateTime,
-                         @Column(name = "dailylog_update_time")
+//                         @Column(name = "dailylog_update_time")
                          var dailylogUpdateTime: LocalDateTime,
-                         @Column(name = "user_id")
+//                         @Column(name = "user_id")
                          var userId: Int) {
     constructor() : this(
             null,

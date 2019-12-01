@@ -22,9 +22,8 @@ class SwaggerConfig {
 
     @Bean
     fun restApi(): Docket {
-        // @formatter:off
         return Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
+//                .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation::class.java))
                 .build()
@@ -39,17 +38,16 @@ class SwaggerConfig {
                                         ).build()
                         )
                 )
-        // @formatter:on
     }
 
-    private fun apiInfo(): ApiInfo {
-        // @formatter:off
-        return ApiInfoBuilder()
-                .title("Spring boot Swagger")
-                .description("api list")
-                .contact(springfox.documentation.service.Contact("JS","no","jwjw.ow.com"))
-                .version("1.0.0")
-                .build()
-        // @formatter:on
-    }
+//    private fun apiInfo(): ApiInfo {
+//        // @formatter:off
+//        return ApiInfoBuilder()
+//                .title("Spring boot Swagger")
+//                .description("api list")
+//                .contact(springfox.documentation.service.Contact("JS","no","jwjw.ow.com"))
+//                .version("1.0.0")
+//                .build()
+//        // @formatter:on
+//    }
 }
