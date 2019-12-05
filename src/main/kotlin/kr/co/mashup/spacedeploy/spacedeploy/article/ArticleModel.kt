@@ -8,19 +8,15 @@ import javax.persistence.*
 @Table(name = "DAILYLOG")
 data class ArticleEntity(@Id
                          @GeneratedValue(strategy = GenerationType.IDENTITY)
-//                         @Column(name = "dailylog_id")
-                         var dailylogId: Int? = null,
+                         var dailylogId: Long? = null,
                          var article: String? = null,
                          var emotion: Int,
                          var year: Int,
                          var month: Int,
                          var day: Int,
-//                         @Column(name = "dailylog_create_time")
                          var dailylogCreateTime: LocalDateTime,
-//                         @Column(name = "dailylog_update_time")
                          var dailylogUpdateTime: LocalDateTime,
-//                         @Column(name = "user_id")
-                         var userId: Int) {
+                         var userId: Long) {
     constructor() : this(
             null,
             null,
@@ -33,7 +29,7 @@ data class ArticleEntity(@Id
                 day: Int,
                 dailylogCreateTime: LocalDateTime,
                 dailylogUpdateTime: LocalDateTime,
-                userId: Int) : this(
+                userId: Long) : this(
             null,
             article,
             emotion,
@@ -45,15 +41,15 @@ data class ArticleEntity(@Id
             userId)
 }
 
-data class ResArticleDto(
-        val id: Int,
+data class ArticleDto(
+        val dailylogId: Long,
         val emotion: Int,
         val time: LocalDateTime,
         val article: String?
 )
 
 data class ResPostArticleDto(
-        val userId: Int,
+        val userId: Long,
         val emotion: Int,
         val time: LocalDateTime,
         val article: String?
