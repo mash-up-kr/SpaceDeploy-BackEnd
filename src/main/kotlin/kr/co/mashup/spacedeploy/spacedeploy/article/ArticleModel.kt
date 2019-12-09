@@ -14,19 +14,21 @@ data class ArticleEntity(@Id
                          var year: Int,
                          var month: Int,
                          var day: Int,
+                         var dailyLogDate: LocalDateTime,
                          var dailylogCreateTime: LocalDateTime,
                          var dailylogUpdateTime: LocalDateTime,
                          var userId: Long) {
     constructor() : this(
             null,
             null,
-            0,1,0,0,LocalDateTime.now(), LocalDateTime.now(),0)
+            0,1,0,0,LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(),0)
 
     constructor(article: String?,
                 emotion: Int,
                 year: Int,
                 month: Int,
                 day: Int,
+                dailyLogDate: LocalDateTime,
                 dailylogCreateTime: LocalDateTime,
                 dailylogUpdateTime: LocalDateTime,
                 userId: Long) : this(
@@ -36,6 +38,7 @@ data class ArticleEntity(@Id
             year,
             month,
             day,
+            dailyLogDate,
             dailylogCreateTime,
             dailylogUpdateTime,
             userId)

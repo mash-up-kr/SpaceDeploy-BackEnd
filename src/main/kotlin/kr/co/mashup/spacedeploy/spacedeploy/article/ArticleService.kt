@@ -16,9 +16,9 @@ class ArticleService(val articleRepository: ArticleRepository) {
         val calendar = Calendar.getInstance()
         calendar.time = Date.from(resDto.time.atZone(ZoneId.of("Asia/Seoul")).toInstant())
         val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
+        val month = (calendar.get(Calendar.MONTH) + 1) % 13
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val article = ArticleEntity(resDto.article, resDto.emotion, year, month, day, resDto.time, resDto.time, resDto.userId)
+        val article = ArticleEntity(resDto.article, resDto.emotion, year, month, day, resDto.time, LocalDateTime.now(), LocalDateTime.now(), resDto.userId)
         articleRepository.save(article)
     }
 
@@ -31,8 +31,10 @@ class ArticleService(val articleRepository: ArticleRepository) {
         val result = articleRepository.findFirstByDailylogId(dailylogId = articleDto.dailylogId)
         result.emotion = articleDto.emotion
         result.article = articleDto.article
+        result.dailyLogDate = articleDto.time
         result.dailylogUpdateTime = LocalDateTime.now()
-        articleRepository.save(result)
-        return articleDto
+        val entity = articleRepository.save(result)
+        val resDto = ArticleDto(entity.dailylogId!!, entity.emotion, entity.dailyLogDate, entity.article)
+        return resDto
     }
 }

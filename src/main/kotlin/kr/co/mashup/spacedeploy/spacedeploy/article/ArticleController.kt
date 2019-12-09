@@ -35,8 +35,8 @@ class ArticleController(val articleService: ArticleService) {
 
     @ApiOperation(value = "감정기록 수정", notes = "감정기록을 수정합니다.")
     @PutMapping()
-    fun editArticle(@RequestBody articleDto: ArticleDto, request: HttpServletRequest) {
+    fun editArticle(@RequestBody articleDto: ArticleDto, request: HttpServletRequest): ResponseEntity<ArticleDto> {
         val token = request.getHeader("Authorization")
-        ResponseEntity.status(HttpStatus.OK).body(articleService.editArticle(articleDto))
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.editArticle(articleDto))
     }
 }
