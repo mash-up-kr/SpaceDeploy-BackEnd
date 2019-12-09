@@ -1,0 +1,55 @@
+name: SpaceDeploy Auto CI
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:      
+      - name: Checkout source code.
+        uses: actions/checkout@master
+        
+      - name: Download ApplicationPorperties
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          mkdir src/main/resources;
+          aws s3 cp s3://spacedeploy/application.properties src/main/resources
+          
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+      
+      - name: Zip target
+        run: |
+          zip -r spaceDeploy *
+        
+      - name: Deploy to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp spaceDeploy.zip s3://spacedeploy/Deploy/spaceDeploy.zip
+          
+      - name: Running AWS Code Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws deploy create-deployment \
+            --application-name spaceDeploy \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name spaceDeploy-group \
+            --description "Github Action Deploy" \
+            --region ap-northeast-2 \
+            --s3-location bucket=spacedeploy,key=Deploy/spaceDeploy.zip,bundleType=zip
