@@ -33,9 +33,4 @@ class LoginController() {
     @PostMapping("/login")
     fun login () =
             ResponseEntity.status(HttpStatus.OK)
-
-    @ApiOperation(value = "로그아웃", notes = "로그아웃")
-    @GetMapping("/logout")
-    fun logout () =
-            ResponseEntity.status(HttpStatus.OK)
 }

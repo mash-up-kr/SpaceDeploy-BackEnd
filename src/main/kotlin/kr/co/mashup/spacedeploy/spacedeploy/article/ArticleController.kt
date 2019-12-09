@@ -21,7 +21,7 @@ class ArticleController(val articleService: ArticleService) {
 
     @ApiOperation(value = "감정기록 저장", notes = "감정기록을 저장합니다.")
     @PostMapping()
-    fun postArticle(@RequestBody articlePostDto: ResPostArticleDto, request: HttpServletRequest) {
+    fun postArticle(@RequestBody articlePostDto: PostArticleDto, request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
         ResponseEntity.status(HttpStatus.OK).body(articleService.postArticle(articlePostDto))
     }

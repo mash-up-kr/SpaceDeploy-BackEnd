@@ -7,12 +7,12 @@ import java.util.*
 
 @Service
 class ArticleService(val articleRepository: ArticleRepository) {
-    fun getArticle(user_id: Long, year: Int, month: Int, day: Int): ArticleDto {
-        val entity = articleRepository.findFirstByUserIdAndYearAndMonthAndDay(user_id, year, month, day)
+    fun getArticle(userId: Long, year: Int, month: Int, day: Int): ArticleDto {
+        val entity = articleRepository.findFirstByUserIdAndYearAndMonthAndDay(userId, year, month, day)
         return ArticleDto(entity.dailylogId!!, entity.emotion, entity.dailylogUpdateTime, entity.article)
     }
 
-    fun postArticle(resDto: ResPostArticleDto) {
+    fun postArticle(resDto: PostArticleDto) {
         val calendar = Calendar.getInstance()
         calendar.time = Date.from(resDto.time.atZone(ZoneId.of("Asia/Seoul")).toInstant())
         val year = calendar.get(Calendar.YEAR)
@@ -32,6 +32,7 @@ class ArticleService(val articleRepository: ArticleRepository) {
         result.emotion = articleDto.emotion
         result.article = articleDto.article
         result.dailylogUpdateTime = LocalDateTime.now()
+        articleRepository.save(result)
         return articleDto
     }
 }

@@ -23,7 +23,8 @@ class SwaggerConfig {
     @Bean
     fun restApi(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
-//                .apiInfo(apiInfo())
+                .host("spacedeploy.pw")
+                .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation::class.java))
                 .build()
@@ -40,14 +41,14 @@ class SwaggerConfig {
                 )
     }
 
-//    private fun apiInfo(): ApiInfo {
-//        // @formatter:off
-//        return ApiInfoBuilder()
-//                .title("Spring boot Swagger")
-//                .description("api list")
+    private fun apiInfo(): ApiInfo {
+        // @formatter:off
+        return ApiInfoBuilder()
+                .title("SpaceDeploy API명세")
+                .description("API명세")
 //                .contact(springfox.documentation.service.Contact("JS","no","jwjw.ow.com"))
-//                .version("1.0.0")
-//                .build()
-//        // @formatter:on
-//    }
+                .version("1.0.0")
+                .build()
+        // @formatter:on
+    }
 }

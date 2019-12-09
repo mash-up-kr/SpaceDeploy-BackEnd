@@ -40,17 +40,3 @@ data class ArticleEntity(@Id
             dailylogUpdateTime,
             userId)
 }
-
-data class ArticleDto(
-        val dailylogId: Long,
-        val emotion: Int,
-        val time: LocalDateTime,
-        val article: String?
-)
-
-data class ResPostArticleDto(
-        val userId: Long,
-        val emotion: Int,
-        val time: LocalDateTime,
-        val article: String?
-)
