@@ -2,6 +2,7 @@ package kr.co.mashup.spacedeploy.spacedeploy.article
 
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
+import kr.co.mashup.spacedeploy.spacedeploy.user.getUserInfo
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -23,6 +24,7 @@ class ArticleController(val articleService: ArticleService) {
     @PostMapping()
     fun postArticle(@RequestBody articlePostDto: PostArticleDto, request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
+        val userInfoJson = getUserInfo(token)
         ResponseEntity.status(HttpStatus.OK).body(articleService.postArticle(articlePostDto))
     }
 
@@ -30,6 +32,7 @@ class ArticleController(val articleService: ArticleService) {
     @DeleteMapping()
     fun deleteArticle(@PathVariable dailyLogId: Long, request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
+        val userInfoJson = getUserInfo(token)
         ResponseEntity.status(HttpStatus.OK).body(articleService.deleteArticle(dailyLogId))
     }
 
@@ -37,6 +40,7 @@ class ArticleController(val articleService: ArticleService) {
     @PutMapping()
     fun editArticle(@RequestBody articleDto: ArticleDto, request: HttpServletRequest): ResponseEntity<ArticleDto> {
         val token = request.getHeader("Authorization")
+        val userInfoJson = getUserInfo(token)
         return ResponseEntity.status(HttpStatus.OK).body(articleService.editArticle(articleDto))
     }
 }

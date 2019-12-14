@@ -1,5 +1,6 @@
 package kr.co.mashup.spacedeploy.spacedeploy
 
+import kr.co.mashup.spacedeploy.spacedeploy.user.sendGet
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
@@ -10,4 +11,9 @@ class SpacedeployApplicationTests {
     fun contextLoads() {
     }
 
+    @Test
+    fun tokenTest() {
+        getUserInfo("5pg4NUK6zATK5LKmiKvH94P3dvynGAqTeSW6xAopdXYAAAFvBCdOZQ")
+        assert(true)
+    }
 }

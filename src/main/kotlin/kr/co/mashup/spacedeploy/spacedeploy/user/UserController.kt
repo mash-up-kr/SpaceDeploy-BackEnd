@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletRequest
 
 @Api(description = "유저 API * 만드는중 *")
 @RestController
@@ -12,18 +13,30 @@ import org.springframework.web.bind.annotation.*
 class UserController(){
     @ApiOperation(value = "개인정보 가져오기", notes = "개인정보 가져오기")
     @GetMapping()
-    fun getProfile () =
-            ResponseEntity.status(HttpStatus.OK)
+    fun getProfile(request: HttpServletRequest) {
+        val token = request.getHeader("Authorization")
+        val userInfoJson = getUserInfo(token)
+
+        ResponseEntity.status(HttpStatus.OK)
+    }
 
     @ApiOperation(value = "개인정보 수정", notes = "개인정보 수정")
     @PutMapping()
-    fun editProfile () =
-            ResponseEntity.status(HttpStatus.OK)
+    fun editProfile(request: HttpServletRequest) {
+        val token = request.getHeader("Authorization")
+        val userInfoJson = getUserInfo(token)
+
+        ResponseEntity.status(HttpStatus.OK)
+    }
 
     @ApiOperation(value = "유저 탈퇴", notes = "유저 탈퇴")
     @DeleteMapping()
-    fun deleteProfile () =
-            ResponseEntity.status(HttpStatus.OK)
+    fun deleteProfile(request: HttpServletRequest) {
+        val token = request.getHeader("Authorization")
+        val userInfoJson = getUserInfo(token)
+
+        ResponseEntity.status(HttpStatus.OK)
+    }
 }
 
 @Api(description = "로그인 API * 만드는중 *")
@@ -31,6 +44,10 @@ class UserController(){
 class LoginController() {
     @ApiOperation(value = "로그인", notes = "로그인")
     @PostMapping("/login")
-    fun login () =
-            ResponseEntity.status(HttpStatus.OK)
+    fun login(request: HttpServletRequest) {
+        val token = request.getHeader("Authorization")
+        val userInfoJson = getUserInfo(token)
+
+        ResponseEntity.status(HttpStatus.OK)
+    }
 }

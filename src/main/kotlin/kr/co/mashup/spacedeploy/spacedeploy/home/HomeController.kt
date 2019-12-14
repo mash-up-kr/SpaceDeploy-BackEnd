@@ -15,7 +15,4 @@ class HomeController(val homeService : HomeService){
     @GetMapping()
     fun getHomeList (@RequestParam year :Int): ResponseEntity<ResultRes> =
             ResponseEntity.status(HttpStatus.OK).body(homeService.getHome(year))
-
-
-
 }
