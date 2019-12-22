@@ -17,7 +17,8 @@ class RemindController() {
     @GetMapping()
     fun getRemindList(request: HttpServletRequest): ResponseEntity<SpecificRemindListDto> {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
         return ResponseEntity.status(HttpStatus.OK).body(SpecificRemindListDto(LocalDateTime.now(), null))
     }
 
@@ -25,7 +26,8 @@ class RemindController() {
     @PostMapping()
     fun writeRemind(postRemindDto: PostRemindDto, request: HttpServletRequest): ResponseEntity<RemindDto> {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
         return ResponseEntity.status(HttpStatus.OK).body(RemindDto(0, null, LocalDateTime.now(), LocalDateTime.now(), null, null))
     }
 
@@ -33,7 +35,8 @@ class RemindController() {
     @PutMapping()
     fun editRemind(request: HttpServletRequest): ResponseEntity<RemindDto> {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
         return ResponseEntity.status(HttpStatus.OK).body(RemindDto(0, null, LocalDateTime.now(), LocalDateTime.now(), null, null))
     }
 
@@ -41,7 +44,8 @@ class RemindController() {
     @DeleteMapping()
     fun deleteRemind(request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
         ResponseEntity.status(HttpStatus.OK)
     }
 }

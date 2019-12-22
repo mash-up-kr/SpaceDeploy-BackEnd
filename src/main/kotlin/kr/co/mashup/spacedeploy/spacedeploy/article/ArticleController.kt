@@ -17,6 +17,8 @@ class ArticleController(val articleService: ArticleService) {
     @GetMapping()
     fun getArticle(@RequestParam year: Int, @RequestParam month: Int, @RequestParam day: Int, request: HttpServletRequest): ResponseEntity<ArticleDto> {
         val token = request.getHeader("Authorization")
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
         return ResponseEntity.status(HttpStatus.OK).body(articleService.getArticle(1, year, month, day))
     }
 
@@ -24,7 +26,8 @@ class ArticleController(val articleService: ArticleService) {
     @PostMapping()
     fun postArticle(@RequestBody articlePostDto: PostArticleDto, request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
         ResponseEntity.status(HttpStatus.OK).body(articleService.postArticle(articlePostDto))
     }
 
@@ -32,7 +35,8 @@ class ArticleController(val articleService: ArticleService) {
     @DeleteMapping()
     fun deleteArticle(@PathVariable dailyLogId: Long, request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
         ResponseEntity.status(HttpStatus.OK).body(articleService.deleteArticle(dailyLogId))
     }
 
@@ -40,7 +44,8 @@ class ArticleController(val articleService: ArticleService) {
     @PutMapping()
     fun editArticle(@RequestBody articleDto: ArticleDto, request: HttpServletRequest): ResponseEntity<ArticleDto> {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
         return ResponseEntity.status(HttpStatus.OK).body(articleService.editArticle(articleDto))
     }
 }

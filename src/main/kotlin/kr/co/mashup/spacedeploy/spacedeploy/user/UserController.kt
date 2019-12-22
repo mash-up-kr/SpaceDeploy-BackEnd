@@ -15,7 +15,8 @@ class UserController(){
     @GetMapping()
     fun getProfile(request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
 
         ResponseEntity.status(HttpStatus.OK)
     }
@@ -24,7 +25,8 @@ class UserController(){
     @PutMapping()
     fun editProfile(request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
 
         ResponseEntity.status(HttpStatus.OK)
     }
@@ -33,7 +35,8 @@ class UserController(){
     @DeleteMapping()
     fun deleteProfile(request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
 
         ResponseEntity.status(HttpStatus.OK)
     }
@@ -46,7 +49,8 @@ class LoginController() {
     @PostMapping("/login")
     fun login(request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
-        val userInfoJson = getUserInfo(token)
+        val provider = request.getHeader("Provider")
+        val userInfoJson = getUserInfo(token, provider)
 
         ResponseEntity.status(HttpStatus.OK)
     }
