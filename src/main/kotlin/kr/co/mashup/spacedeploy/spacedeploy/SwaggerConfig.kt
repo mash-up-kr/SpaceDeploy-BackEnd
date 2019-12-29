@@ -45,8 +45,7 @@ class SwaggerConfig {
         // @formatter:off
         return ApiInfoBuilder()
                 .title("SpaceDeploy API명세")
-                .description("API명세")
-//                .contact(springfox.documentation.service.Contact("JS","no","jwjw.ow.com"))
+                .description("Header:\nAuthorization : token\nProvider : facebook | kakao | instgram")
                 .version("1.0.0")
                 .build()
         // @formatter:on
