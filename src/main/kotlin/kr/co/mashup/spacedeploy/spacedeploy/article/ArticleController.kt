@@ -2,7 +2,7 @@ package kr.co.mashup.spacedeploy.spacedeploy.article
 
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import kr.co.mashup.spacedeploy.spacedeploy.user.getUserInfo
+import kr.co.mashup.spacedeploy.spacedeploy.oauth.getUID
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -18,7 +18,7 @@ class ArticleController(val articleService: ArticleService) {
     fun getArticle(@RequestParam year: Int, @RequestParam month: Int, @RequestParam day: Int, request: HttpServletRequest): ResponseEntity<ArticleDto> {
         val token = request.getHeader("Authorization")
         val provider = request.getHeader("Provider")
-        val userInfoJson = getUserInfo(token, provider)
+        val userInfoJson = getUID(token, provider)
         return ResponseEntity.status(HttpStatus.OK).body(articleService.getArticle(1, year, month, day))
     }
 
@@ -27,7 +27,7 @@ class ArticleController(val articleService: ArticleService) {
     fun postArticle(@RequestBody articlePostDto: PostArticleDto, request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
         val provider = request.getHeader("Provider")
-        val userInfoJson = getUserInfo(token, provider)
+        val userInfoJson = getUID(token, provider)
         ResponseEntity.status(HttpStatus.OK).body(articleService.postArticle(articlePostDto))
     }
 
@@ -36,7 +36,7 @@ class ArticleController(val articleService: ArticleService) {
     fun deleteArticle(@PathVariable dailyLogId: Long, request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
         val provider = request.getHeader("Provider")
-        val userInfoJson = getUserInfo(token, provider)
+        val userInfoJson = getUID(token, provider)
         ResponseEntity.status(HttpStatus.OK).body(articleService.deleteArticle(dailyLogId))
     }
 
@@ -45,7 +45,7 @@ class ArticleController(val articleService: ArticleService) {
     fun editArticle(@RequestBody articleDto: ArticleDto, request: HttpServletRequest): ResponseEntity<ArticleDto> {
         val token = request.getHeader("Authorization")
         val provider = request.getHeader("Provider")
-        val userInfoJson = getUserInfo(token, provider)
+        val userInfoJson = getUID(token, provider)
         return ResponseEntity.status(HttpStatus.OK).body(articleService.editArticle(articleDto))
     }
 }

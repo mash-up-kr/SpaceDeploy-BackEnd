@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/push")
 class PushController(val pushService : PushService){
 
-//    @ApiOperation(value = "홈화면 정보 가져오기", notes = "지정한 연도의 감정기록과 각 달의 메인감정을 가져옵니다.")
+    @ApiOperation(value = "푸쉬발송", notes = "내용의 푸쉬를 발송합니다")
     @GetMapping()
     fun postPush () =
             ResponseEntity.status(HttpStatus.OK).body(pushService.getToken())

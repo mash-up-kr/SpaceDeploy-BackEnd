@@ -2,7 +2,7 @@ package kr.co.mashup.spacedeploy.spacedeploy.remind
 
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import kr.co.mashup.spacedeploy.spacedeploy.user.getUserInfo
+import kr.co.mashup.spacedeploy.spacedeploy.oauth.getUID
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -18,7 +18,7 @@ class RemindController() {
     fun getRemindList(request: HttpServletRequest): ResponseEntity<SpecificRemindListDto> {
         val token = request.getHeader("Authorization")
         val provider = request.getHeader("Provider")
-        val userInfoJson = getUserInfo(token, provider)
+        val userInfoJson = getUID(token, provider)
         return ResponseEntity.status(HttpStatus.OK).body(SpecificRemindListDto(LocalDateTime.now(), null))
     }
 
@@ -27,7 +27,7 @@ class RemindController() {
     fun writeRemind(postRemindDto: PostRemindDto, request: HttpServletRequest): ResponseEntity<RemindDto> {
         val token = request.getHeader("Authorization")
         val provider = request.getHeader("Provider")
-        val userInfoJson = getUserInfo(token, provider)
+        val userInfoJson = getUID(token, provider)
         return ResponseEntity.status(HttpStatus.OK).body(RemindDto(0, null, LocalDateTime.now(), LocalDateTime.now(), null, null))
     }
 
@@ -36,7 +36,7 @@ class RemindController() {
     fun editRemind(request: HttpServletRequest): ResponseEntity<RemindDto> {
         val token = request.getHeader("Authorization")
         val provider = request.getHeader("Provider")
-        val userInfoJson = getUserInfo(token, provider)
+        val userInfoJson = getUID(token, provider)
         return ResponseEntity.status(HttpStatus.OK).body(RemindDto(0, null, LocalDateTime.now(), LocalDateTime.now(), null, null))
     }
 
@@ -45,7 +45,7 @@ class RemindController() {
     fun deleteRemind(request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
         val provider = request.getHeader("Provider")
-        val userInfoJson = getUserInfo(token, provider)
+        val userInfoJson = getUID(token, provider)
         ResponseEntity.status(HttpStatus.OK)
     }
 }
