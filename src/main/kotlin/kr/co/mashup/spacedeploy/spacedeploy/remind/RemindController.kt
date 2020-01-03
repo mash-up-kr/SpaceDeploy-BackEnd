@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 import javax.servlet.http.HttpServletRequest
 
 @Api(description = "회고 API")
+@CrossOrigin
 @RestController
 @RequestMapping("/remind")
 class RemindController() {

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @Api(description = "홈화면 API")
+@CrossOrigin
 @RestController
 @RequestMapping("/home")
 class HomeController(val homeService : HomeService){

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @Api(description = "Push")
+@CrossOrigin
 @RestController
 @RequestMapping("/push")
 class PushController(val pushService : PushService){
