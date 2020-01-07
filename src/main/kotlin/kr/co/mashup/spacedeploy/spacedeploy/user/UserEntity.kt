@@ -16,7 +16,7 @@ data class UserEntity(@Id
                       var token: String? = null,
                       var pushToken: String? = null,
                       var userCreateTime: LocalDateTime,
-                      var userupdateTime: LocalDateTime) {
+                      var useruUpdateTime: LocalDateTime) {
     constructor() : this(
             null,
             "temp",
@@ -37,7 +37,7 @@ data class UserEntity(@Id
                 token: String?,
                 pushToken: String?,
                 userCreateTime: LocalDateTime,
-                userupdateTime: LocalDateTime) : this(
+                useruUpdateTime: LocalDateTime) : this(
             null,
             uid,
             email,
@@ -47,5 +47,5 @@ data class UserEntity(@Id
             token,
             pushToken,
             userCreateTime,
-            userupdateTime)
+            useruUpdateTime)
 }
