@@ -14,7 +14,7 @@ data class ArticleEntity(@Id
                          var year: Int,
                          var month: Int,
                          var day: Int,
-                         var dailyLogDate: LocalDateTime,
+                         var dailylogDate: LocalDateTime,
                          var dailylogCreateTime: LocalDateTime,
                          var dailylogUpdateTime: LocalDateTime,
                          var userId: Long) {
@@ -28,7 +28,7 @@ data class ArticleEntity(@Id
                 year: Int,
                 month: Int,
                 day: Int,
-                dailyLogDate: LocalDateTime,
+                dailylogDate: LocalDateTime,
                 dailylogCreateTime: LocalDateTime,
                 dailylogUpdateTime: LocalDateTime,
                 userId: Long) : this(
@@ -38,7 +38,7 @@ data class ArticleEntity(@Id
             year,
             month,
             day,
-            dailyLogDate,
+            dailylogDate,
             dailylogCreateTime,
             dailylogUpdateTime,
             userId)

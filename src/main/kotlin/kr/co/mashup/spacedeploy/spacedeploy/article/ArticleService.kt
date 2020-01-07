@@ -31,10 +31,10 @@ class ArticleService(val articleRepository: ArticleRepository) {
         val result = articleRepository.findFirstByDailylogId(dailylogId = articleDto.dailylogId)
         result.emotion = articleDto.emotion
         result.article = articleDto.article
-        result.dailyLogDate = articleDto.time
+        result.dailylogDate = articleDto.time
         result.dailylogUpdateTime = LocalDateTime.now()
         val entity = articleRepository.save(result)
-        val resDto = ArticleDto(entity.dailylogId!!, entity.emotion, entity.dailyLogDate, entity.article)
+        val resDto = ArticleDto(entity.dailylogId!!, entity.emotion, entity.dailylogDate, entity.article)
         return resDto
     }
 }

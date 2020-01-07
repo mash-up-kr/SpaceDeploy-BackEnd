@@ -21,7 +21,7 @@ class SwaggerConfig {
     @Bean
     fun restApi(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
-                .host("spacedeploy.pw")
+//                .host("spacedeploy.pw")
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation::class.java))
