@@ -1,19 +1,12 @@
 package kr.co.mashup.spacedeploy.spacedeploy
 
-import springfox.documentation.builders.ApiInfoBuilder
-import springfox.documentation.service.ApiInfo
-import springfox.documentation.schema.ModelRef
-import springfox.documentation.builders.ResponseMessageBuilder
-import org.springframework.web.bind.annotation.RequestMethod
 import io.swagger.annotations.ApiOperation
-import io.swagger.annotations.Contact
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.builders.PathSelectors
 import springfox.documentation.builders.RequestHandlerSelectors
-import springfox.documentation.service.ApiKey
-import springfox.documentation.service.AuthorizationScope
-import springfox.documentation.service.SecurityReference
+import springfox.documentation.service.*
 import springfox.documentation.spi.DocumentationType
 import springfox.documentation.spi.service.contexts.SecurityContext
 import springfox.documentation.spring.web.plugins.Docket
@@ -34,8 +27,8 @@ class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation::class.java))
                 .build()
                 .useDefaultResponseMessages(false)
-                .securityContexts(listOf(securityContext()))
-                .securitySchemes(listOf(provider(), token()))
+                .securityContexts(listOf(actuatorSecurityContext()))
+                .securitySchemes(listOf(providerAuthScheme(), tokenAuthScheme()))
     }
 
     private fun apiInfo(): ApiInfo {
@@ -56,15 +49,27 @@ www.spacedeploy.pw
         // @formatter:on
     }
 
-    private fun securityContext(): SecurityContext =
-            SecurityContext.builder()
-                    .securityReferences(listOf(defaultAuth()))
-                    .forPaths(PathSelectors.regex("/*"))
-                    .build()
 
-    private fun defaultAuth(): SecurityReference =
-            SecurityReference("Authorization", arrayOf(AuthorizationScope("global", "accessEverything")))
+    private fun actuatorSecurityContext(): SecurityContext? {
+        return SecurityContext.builder()
+                .securityReferences(Arrays.asList(providerAuthReference(), tokenAuthReference()))
+                .forPaths(PathSelectors.ant("/**"))
+                .build()
+    }
 
-    private fun token(): ApiKey = ApiKey("Token", "Authorization", "header")
-    private fun provider(): ApiKey = ApiKey("Provider", "provider", "header")
+    private fun providerAuthScheme(): SecurityScheme? {
+        return ApiKey("Provider", "Provider", "header")
+    }
+
+    private fun tokenAuthScheme(): SecurityScheme? {
+        return ApiKey("Authorization", "Authorization", "header")
+    }
+
+    private fun providerAuthReference(): SecurityReference? {
+        return SecurityReference("Provider", arrayOfNulls(0))
+    }
+
+    private fun tokenAuthReference(): SecurityReference? {
+        return SecurityReference("Authorization", arrayOfNulls(0))
+    }
 }
