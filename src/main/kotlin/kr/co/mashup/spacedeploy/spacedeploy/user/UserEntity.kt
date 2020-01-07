@@ -11,12 +11,12 @@ data class UserEntity(@Id
                       var uid: String,
                       var email: String? = null,
                       var password: String? = null,
-                      var nicname: String? = null,
+                      var nickname: String? = null,
                       var name: String? = null,
                       var token: String? = null,
                       var pushToken: String? = null,
                       var userCreateTime: LocalDateTime,
-                      var useruUpdateTime: LocalDateTime) {
+                      var userUpdateTime: LocalDateTime) {
     constructor() : this(
             null,
             "temp",
@@ -32,20 +32,20 @@ data class UserEntity(@Id
     constructor(uid: String,
                 email: String?,
                 password: String?,
-                nicname: String?,
+                nickname: String?,
                 name: String?,
                 token: String?,
                 pushToken: String?,
                 userCreateTime: LocalDateTime,
-                useruUpdateTime: LocalDateTime) : this(
+                userUpdateTime: LocalDateTime) : this(
             null,
             uid,
             email,
             password,
-            nicname,
+            nickname,
             name,
             token,
             pushToken,
             userCreateTime,
-            useruUpdateTime)
+            userUpdateTime)
 }
