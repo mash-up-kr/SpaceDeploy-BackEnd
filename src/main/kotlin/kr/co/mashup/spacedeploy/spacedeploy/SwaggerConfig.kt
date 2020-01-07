@@ -40,8 +40,15 @@ class SwaggerConfig {
 ### 주소
 www.spacedeploy.pw
 ### Header
-- Authorization: token
-- Provider: facebook | kakao |instgram
+
+```
+Authorization: token
+Provider: facebook | kakao |instgram
+```
+
+### Time Formmat 
+
+    yyyy-MM-dd'T'HH:mm:ss.SSS
 
                     """)
                 .version("1.0.0")
