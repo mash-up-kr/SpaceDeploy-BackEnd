@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 @Api(description = "감정기록 API")
-@CrossOrigin
 @RequestMapping("/dailyArticle")
 @RestController
 class ArticleController(val articleService: ArticleService) {

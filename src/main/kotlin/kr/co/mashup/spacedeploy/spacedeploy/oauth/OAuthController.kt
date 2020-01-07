@@ -18,6 +18,7 @@ enum class Provider {
 }
 
 fun getUID(accessToken: String, provider: String): String?  {
+    return null
     when (Provider.fromString("provider")) {
         Provider.facebook -> return OAuthService().getFacebookUserInfo(accessToken)
         Provider.instagram -> return OAuthService().getInstagramUserInfo(accessToken)
