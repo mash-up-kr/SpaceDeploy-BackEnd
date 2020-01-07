@@ -9,8 +9,13 @@ import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.Contact
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import springfox.documentation.builders.PathSelectors
 import springfox.documentation.builders.RequestHandlerSelectors
+import springfox.documentation.service.ApiKey
+import springfox.documentation.service.AuthorizationScope
+import springfox.documentation.service.SecurityReference
 import springfox.documentation.spi.DocumentationType
+import springfox.documentation.spi.service.contexts.SecurityContext
 import springfox.documentation.spring.web.plugins.Docket
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 import java.util.*
@@ -29,6 +34,8 @@ class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation::class.java))
                 .build()
                 .useDefaultResponseMessages(false)
+                .securityContexts(listOf(securityContext()))
+                .securitySchemes(listOf(provider(), token()))
     }
 
     private fun apiInfo(): ApiInfo {
@@ -48,4 +55,16 @@ www.spacedeploy.pw
                 .build()
         // @formatter:on
     }
+
+    private fun securityContext(): SecurityContext =
+            SecurityContext.builder()
+                    .securityReferences(listOf(defaultAuth()))
+                    .forPaths(PathSelectors.regex("/*"))
+                    .build()
+
+    private fun defaultAuth(): SecurityReference =
+            SecurityReference("Authorization", arrayOf(AuthorizationScope("global", "accessEverything")))
+
+    private fun token(): ApiKey = ApiKey("Token", "token", "header")
+    private fun provider(): ApiKey = ApiKey("Provider", "provider", "header")
 }
