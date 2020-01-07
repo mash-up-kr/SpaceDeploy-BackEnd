@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 @Api(description = "홈화면 API")
-@CrossOrigin
 @RestController
 @RequestMapping("/home")
 class HomeController(val homeService : HomeService){

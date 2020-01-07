@@ -29,16 +29,6 @@ class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation::class.java))
                 .build()
                 .useDefaultResponseMessages(false)
-                .globalResponseMessage(RequestMethod.GET,
-                        Arrays.asList(
-                                ResponseMessageBuilder()
-                                        .code(500)
-                                        .message("server error")
-                                        .responseModel(
-                                                ModelRef("Error")
-                                        ).build()
-                        )
-                )
     }
 
     private fun apiInfo(): ApiInfo {
