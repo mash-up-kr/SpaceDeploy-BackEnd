@@ -65,6 +65,6 @@ www.spacedeploy.pw
     private fun defaultAuth(): SecurityReference =
             SecurityReference("Authorization", arrayOf(AuthorizationScope("global", "accessEverything")))
 
-    private fun token(): ApiKey = ApiKey("Token", "token", "header")
+    private fun token(): ApiKey = ApiKey("Token", "Authorization", "header")
     private fun provider(): ApiKey = ApiKey("Provider", "provider", "header")
 }
