@@ -45,7 +45,15 @@ class SwaggerConfig {
         // @formatter:off
         return ApiInfoBuilder()
                 .title("SpaceDeploy API명세")
-                .description("Header:\nAuthorization : token\nProvider : facebook | kakao | instgram")
+                .description("""
+## 우주배포 팀 화이팅
+### 주소
+www.spacedeploy.pw
+### Header
+- Authorization: token
+- Provider: facebook | kakao |instgram
+
+                    """)
                 .version("1.0.0")
                 .build()
         // @formatter:on
