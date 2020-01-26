@@ -51,6 +51,16 @@ TimeZone: ex) Asia/Seoul
 
     yyyy-MM-dd'T'HH:mm:ss.SSS
 
+### Emotion Enum
+각 기분에 해당되는 Int값을 사용합니다.
+- 기쁨: pleasure - 0
+- 행복: Happiness - 1
+- 평온: tranquility - 2
+- 만족: Satisfaction - 3
+- 화남: aggro - 4
+- 우울: depressed - 5
+- 피곤: tired - 6
+- 슬픔 : sadness - 7
                     """)
                 .version("1.0.0")
                 .build()

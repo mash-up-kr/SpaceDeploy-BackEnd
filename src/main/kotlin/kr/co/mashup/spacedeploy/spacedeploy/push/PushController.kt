@@ -13,6 +13,7 @@ class PushController(val pushService : PushService){
 
     @ApiOperation(value = "푸쉬발송", notes = "내용의 푸쉬를 발송합니다")
     @GetMapping()
-    fun postPush () =
-            ResponseEntity.status(HttpStatus.OK).body(pushService.getToken())
+    fun postPush (): ResponseEntity<Unit> {
+        return ResponseEntity.status(HttpStatus.OK).body(pushService.getToken())
+    }
 }
