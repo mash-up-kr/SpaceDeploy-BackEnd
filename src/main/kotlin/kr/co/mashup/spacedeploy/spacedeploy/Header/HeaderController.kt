@@ -22,6 +22,7 @@ fun getHeader(request: HttpServletRequest): HeaderDTO {
     if (uid == null) {
         throw TokenErrorException(ErrorsDetails(4000, "Error getting uid. check Token & Provider"))
     }
+
     val header = HeaderDTO(uid, timeZone, token)
 
     return header

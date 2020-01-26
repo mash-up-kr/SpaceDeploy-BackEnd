@@ -10,7 +10,6 @@ data class ArticleDto(
 )
 
 data class PostArticleDto(
-        val userId: Long,
         val emotion: Int,
         val time: LocalDateTime,
         val article: String?

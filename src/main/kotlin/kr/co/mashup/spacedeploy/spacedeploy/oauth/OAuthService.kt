@@ -1,5 +1,7 @@
 package kr.co.mashup.spacedeploy.spacedeploy.oauth
 
+import kr.co.mashup.spacedeploy.spacedeploy.Error.ErrorsDetails
+import kr.co.mashup.spacedeploy.spacedeploy.Error.TokenErrorException
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -15,7 +17,7 @@ class OAuthService() {
             conn.setRequestProperty("accept", "application/json")
 
             if (conn.responseCode != HttpURLConnection.HTTP_OK) {
-                throw RuntimeException("Request Failed. HTTP Error Code: " + conn.responseCode + conn.responseMessage)
+                throw TokenErrorException(ErrorsDetails(4000, "Error getting uid. check Token & Provider"))
             }
 
             val br = BufferedReader(InputStreamReader(conn.inputStream))
@@ -41,7 +43,7 @@ class OAuthService() {
             conn.setRequestProperty("access_token", accessToken)
 
             if (conn.responseCode != HttpURLConnection.HTTP_OK) {
-                throw RuntimeException("Request Failed. HTTP Error Code: " + conn.responseCode + conn.responseMessage)
+                throw TokenErrorException(ErrorsDetails(4000, "Error getting uid. check Token & Provider"))
             }
 
             val br = BufferedReader(InputStreamReader(conn.inputStream))
@@ -68,7 +70,7 @@ class OAuthService() {
             conn.setRequestProperty("access_token", "AppId")
 
             if (conn.responseCode != HttpURLConnection.HTTP_OK) {
-                throw RuntimeException("Request Failed. HTTP Error Code: " + conn.responseCode + conn.responseMessage)
+                throw TokenErrorException(ErrorsDetails(4000, "Error getting uid. check Token & Provider"))
             }
 
             val br = BufferedReader(InputStreamReader(conn.inputStream))

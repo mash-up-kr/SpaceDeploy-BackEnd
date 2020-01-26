@@ -17,11 +17,12 @@ data class ArticleEntity(@Id
                          var dailylogDate: LocalDateTime,
                          var dailylogCreateTime: LocalDateTime,
                          var dailylogUpdateTime: LocalDateTime,
-                         var userId: Long) {
+                         var userId: Long,
+                         var remindId: Long) {
     constructor() : this(
             null,
             null,
-            0,1,0,0,LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(),0)
+            0,1,0,0,LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(),0,0)
 
     constructor(article: String?,
                 emotion: Int,
@@ -31,7 +32,8 @@ data class ArticleEntity(@Id
                 dailylogDate: LocalDateTime,
                 dailylogCreateTime: LocalDateTime,
                 dailylogUpdateTime: LocalDateTime,
-                userId: Long) : this(
+                userId: Long,
+                remindId: Long) : this(
             null,
             article,
             emotion,
@@ -41,5 +43,6 @@ data class ArticleEntity(@Id
             dailylogDate,
             dailylogCreateTime,
             dailylogUpdateTime,
-            userId)
+            userId,
+            remindId)
 }

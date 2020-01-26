@@ -21,7 +21,7 @@ enum class Provider {
 }
 
 fun getUID(accessToken: String, provider: String): String?  {
-    when (Provider.fromString("provider")) {
+    when (Provider.fromString(provider)) {
         Provider.facebook -> return OAuthService().getFacebookUserInfo(accessToken)
         Provider.instagram -> return OAuthService().getInstagramUserInfo(accessToken)
         Provider.kakao -> return OAuthService().getKakaoUserInfo(accessToken)

@@ -1,5 +1,6 @@
 package kr.co.mashup.spacedeploy.spacedeploy.article
 
+import kr.co.mashup.spacedeploy.spacedeploy.user.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ArticleRepository : JpaRepository<ArticleEntity, Int> {

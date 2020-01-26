@@ -18,27 +18,27 @@ class ArticleController(val articleService: ArticleService) {
     @GetMapping()
     fun getArticle(@RequestParam year: Int, @RequestParam month: Int, @RequestParam day: Int, request: HttpServletRequest): ResponseEntity<ArticleDto> {
         val header = getHeader(request)
-        return ResponseEntity.status(HttpStatus.OK).body(articleService.getArticle(1, year, month, day))
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.getArticle(year, month, day, header))
     }
 
     @ApiOperation(value = "감정기록 저장", notes = "감정기록을 저장합니다.")
     @PostMapping()
     fun postArticle(@RequestBody articlePostDto: PostArticleDto, request: HttpServletRequest) {
         val header = getHeader(request)
-        ResponseEntity.status(HttpStatus.OK).body(articleService.postArticle(articlePostDto))
+        ResponseEntity.status(HttpStatus.OK).body(articleService.postArticle(articlePostDto, header))
     }
 
     @ApiOperation(value = "감정기록 삭제", notes = "지정한 감정기록을 삭제합니다.")
     @DeleteMapping()
     fun deleteArticle(@PathVariable dailyLogId: Long, request: HttpServletRequest) {
         val header = getHeader(request)
-        ResponseEntity.status(HttpStatus.OK).body(articleService.deleteArticle(dailyLogId))
+        ResponseEntity.status(HttpStatus.OK).body(articleService.deleteArticle(dailyLogId, header))
     }
 
     @ApiOperation(value = "감정기록 수정", notes = "감정기록을 수정합니다.")
     @PutMapping()
     fun editArticle(@RequestBody articleDto: ArticleDto, request: HttpServletRequest): ResponseEntity<ArticleDto> {
         val header = getHeader(request)
-        return ResponseEntity.status(HttpStatus.OK).body(articleService.editArticle(articleDto))
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.editArticle(articleDto, header))
     }
 }
