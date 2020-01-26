@@ -10,6 +10,14 @@ import java.lang.RuntimeException
 
 @RestControllerAdvice
 class ControllerAdviceRequestError: ResponseEntityExceptionHandler() {
+    @ExceptionHandler(value = [(UserException::class)])
+    fun handleUnknownProvider(ex: UserException,request: WebRequest): ResponseEntity<ErrorsDetails> {
+        val errorDetails = ErrorsDetails(ex.error.code,
+                ex.error.message
+        )
+        return ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST)
+    }
+
     @ExceptionHandler(value = [(UnknownProviderException::class)])
     fun handleUnknownProvider(ex: UnknownProviderException,request: WebRequest): ResponseEntity<ErrorsDetails> {
         val errorDetails = ErrorsDetails(ex.error.code,
@@ -34,6 +42,7 @@ class ControllerAdviceRequestError: ResponseEntityExceptionHandler() {
         return ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST)
     }
 }
+class UserException(val error: ErrorsDetails): RuntimeException()
 class UnknownProviderException(val error: ErrorsDetails): RuntimeException()
 class TokenErrorException(val error: ErrorsDetails): RuntimeException()
 class HeaderNullException(val error: ErrorsDetails): RuntimeException()

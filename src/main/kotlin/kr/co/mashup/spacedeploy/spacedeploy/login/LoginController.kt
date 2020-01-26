@@ -19,4 +19,10 @@ class LoginController(val loginService: LoginService) {
         val loginDto = LoginDto(header.uid, header.token, pushToken)
         ResponseEntity.status(HttpStatus.OK).body(loginService.login(loginDto))
     }
+    @ApiOperation(value = "로그아웃", notes = "로그아웃")
+    @PostMapping("/logout")
+    fun logout(request: HttpServletRequest) {
+        val header = getHeader(request)
+        ResponseEntity.status(HttpStatus.OK).body(loginService.logout(header))
+    }
 }

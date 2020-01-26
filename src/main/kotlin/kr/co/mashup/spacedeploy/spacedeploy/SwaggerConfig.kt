@@ -69,6 +69,8 @@ TimeZone: ex) Asia/Seoul
 
 - 4000: UID를 가져오는데 문제 생김 (Token, Provider 확인)
 - 4001: 알수없는 Provider 위에 입력된 프로바이더중 입력
+
+- 9000: 해당 User를 찾을음 수 없
                     """)
                 .version("1.0.0")
                 .build()
