@@ -44,6 +44,7 @@ www.spacedeploy.pw
 ```
 Authorization: token
 Provider: facebook | kakao |instgram
+TimeZone: ex) Asia/Seoul
 ```
 
 ### Time Formmat 

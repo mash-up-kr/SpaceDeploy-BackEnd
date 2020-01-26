@@ -33,7 +33,7 @@ class RemindController() {
 
     @ApiOperation(value = "회고 수정", notes = "회고 수정")
     @PutMapping()
-    fun editRemind(request: HttpServletRequest): ResponseEntity<RemindDto> {
+    fun editRemind(editRemindDto: EditRemindDto, request: HttpServletRequest): ResponseEntity<RemindDto> {
         val token = request.getHeader("Authorization")
         val provider = request.getHeader("Provider")
         val userInfoJson = getUID(token, provider)
@@ -42,7 +42,7 @@ class RemindController() {
 
     @ApiOperation(value = "회고 삭제", notes = "회고 삭제")
     @DeleteMapping()
-    fun deleteRemind(request: HttpServletRequest) {
+    fun deleteRemind(editRemindDto: EditRemindDto, request: HttpServletRequest) {
         val token = request.getHeader("Authorization")
         val provider = request.getHeader("Provider")
         val userInfoJson = getUID(token, provider)

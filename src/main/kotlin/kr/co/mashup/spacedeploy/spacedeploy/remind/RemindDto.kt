@@ -7,6 +7,10 @@ data class SpecificRemindListDto(
         val remind: ArrayList<RemindListDto>?
 )
 
+data class EditRemindDto(
+        val remindId: Long
+)
+
 data class RemindListDto(
         val remindId: Long,
         val bestEmotion: Int,
