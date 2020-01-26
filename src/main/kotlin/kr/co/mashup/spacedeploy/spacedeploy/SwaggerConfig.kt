@@ -28,7 +28,7 @@ class SwaggerConfig {
                 .build()
                 .useDefaultResponseMessages(false)
                 .securityContexts(listOf(actuatorSecurityContext()))
-                .securitySchemes(listOf(providerAuthScheme(), tokenAuthScheme()))
+                .securitySchemes(listOf(timeZoneAuthScheme(), providerAuthScheme(), tokenAuthScheme()))
     }
 
     private fun apiInfo(): ApiInfo {
@@ -61,6 +61,14 @@ TimeZone: ex) Asia/Seoul
 - 우울: depressed - 5
 - 피곤: tired - 6
 - 슬픔 : sadness - 7
+
+### Error code
+- 1001: 헤더에 토큰이 없음
+- 1002: 헤더에 프로바이더가 없음
+- 1003: 헤더에 타임존이 없음
+
+- 4000: UID를 가져오는데 문제 생김 (Token, Provider 확인)
+- 4001: 알수없는 Provider 위에 입력된 프로바이더중 입력
                     """)
                 .version("1.0.0")
                 .build()
@@ -70,7 +78,7 @@ TimeZone: ex) Asia/Seoul
 
     private fun actuatorSecurityContext(): SecurityContext? {
         return SecurityContext.builder()
-                .securityReferences(Arrays.asList(providerAuthReference(), tokenAuthReference()))
+                .securityReferences(Arrays.asList(timeZoneAuthReference(), providerAuthReference(), tokenAuthReference()))
                 .forPaths(PathSelectors.ant("/**"))
                 .build()
     }
@@ -83,11 +91,19 @@ TimeZone: ex) Asia/Seoul
         return ApiKey("Authorization", "Authorization", "header")
     }
 
+    private fun timeZoneAuthScheme(): SecurityScheme? {
+        return ApiKey("TimeZone", "TimeZone", "header")
+    }
+
     private fun providerAuthReference(): SecurityReference? {
         return SecurityReference("Provider", arrayOfNulls(0))
     }
 
     private fun tokenAuthReference(): SecurityReference? {
         return SecurityReference("Authorization", arrayOfNulls(0))
+    }
+
+    private fun timeZoneAuthReference(): SecurityReference? {
+        return SecurityReference("TimeZone", arrayOfNulls(0))
     }
 }

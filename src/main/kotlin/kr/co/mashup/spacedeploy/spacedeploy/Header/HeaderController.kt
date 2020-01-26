@@ -1,14 +1,27 @@
 package kr.co.mashup.spacedeploy.spacedeploy.Header
 
+import kr.co.mashup.spacedeploy.spacedeploy.Error.ErrorsDetails
+import kr.co.mashup.spacedeploy.spacedeploy.Error.HeaderNullException
+import kr.co.mashup.spacedeploy.spacedeploy.Error.TokenErrorException
 import kr.co.mashup.spacedeploy.spacedeploy.oauth.getUID
 import javax.servlet.http.HttpServletRequest
 
-
 fun getHeader(request: HttpServletRequest): HeaderDTO {
-    val token = request.getHeader("Authorization")
-    val provider = request.getHeader("Provider")
-    val uid = getUID(token, provider)
-    val timeZone = request.getHeader("TimeZone")
+    val token: String? = request.getHeader("Authorization")
+    val provider: String? = request.getHeader("Provider")
+    val timeZone: String? = request.getHeader("TimeZone")
+    if (token == null) {
+       throw HeaderNullException(ErrorsDetails(1001, "Token must be exist"))
+    } else if (provider == null) {
+        throw HeaderNullException(ErrorsDetails(1002, "Provider must be exist"))
+    } else if (timeZone == null) {
+        throw HeaderNullException(ErrorsDetails(1003, "Timezone must be exist"))
+    }
+
+    val uid: String? = getUID(token!!, provider!!)
+    if (uid == null) {
+        throw TokenErrorException(ErrorsDetails(4000, "Error getting uid. check Token & Provider"))
+    }
     val header = HeaderDTO(uid, timeZone, token)
 
     return header
@@ -16,6 +29,6 @@ fun getHeader(request: HttpServletRequest): HeaderDTO {
 
 data class HeaderDTO(
         val uid: String?,
-        val timeZone: String,
+        val timeZone: String?,
         val token: String?
 )

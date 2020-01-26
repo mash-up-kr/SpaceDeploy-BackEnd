@@ -1,5 +1,8 @@
 package kr.co.mashup.spacedeploy.spacedeploy.oauth
 
+import kr.co.mashup.spacedeploy.spacedeploy.Error.ErrorsDetails
+import kr.co.mashup.spacedeploy.spacedeploy.Error.UnknownProviderException
+
 enum class Provider {
     facebook, instagram, kakao, none;
 
@@ -12,13 +15,12 @@ enum class Provider {
             } else if (provider == "kakao") {
                 return kakao
             }
-            return none
+            throw UnknownProviderException(ErrorsDetails(4001, "unknown Provider. Please select one (facebook, instagram, kakao)"))
         }
     }
 }
 
 fun getUID(accessToken: String, provider: String): String?  {
-    return null
     when (Provider.fromString("provider")) {
         Provider.facebook -> return OAuthService().getFacebookUserInfo(accessToken)
         Provider.instagram -> return OAuthService().getInstagramUserInfo(accessToken)
