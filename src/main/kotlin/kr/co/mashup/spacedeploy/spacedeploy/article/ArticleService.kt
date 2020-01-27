@@ -1,7 +1,12 @@
 package kr.co.mashup.spacedeploy.spacedeploy.article
 
+import kr.co.mashup.spacedeploy.spacedeploy.ETC.getEndDate
+import kr.co.mashup.spacedeploy.spacedeploy.ETC.getStartDate
+import kr.co.mashup.spacedeploy.spacedeploy.Error.DefaultErrorException
+import kr.co.mashup.spacedeploy.spacedeploy.Error.ErrorsDetails
 import kr.co.mashup.spacedeploy.spacedeploy.Header.HeaderDTO
 import kr.co.mashup.spacedeploy.spacedeploy.login.LoginRepository
+import kr.co.mashup.spacedeploy.spacedeploy.remind.RemindEntity
 import kr.co.mashup.spacedeploy.spacedeploy.remind.RemindRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -12,33 +17,57 @@ import java.util.*
 @Service
 class ArticleService(val articleRepository: ArticleRepository, val loginRepository: LoginRepository, val remindRepository: RemindRepository) {
     fun getArticle(year: Int, month: Int, day: Int, header: HeaderDTO): ArticleDto {
-        val userId = loginRepository.findFirstByUid(header.uid!!).userId!!
-        val entity = articleRepository.findFirstByUserIdAndYearAndMonthAndDay(userId, year, month, day)
-        return ArticleDto(entity.dailylogId!!, entity.emotion, entity.dailylogUpdateTime, entity.article)
+        val userEntity = loginRepository.findFirstByUid(header.uid!!)
+        if (userEntity == null) {
+            throw DefaultErrorException(ErrorsDetails(9000, "User not found"))
+        }
+        val userId = userEntity.userId!!
+        val entity: ArticleEntity? = articleRepository.findFirstByUserIdAndYearAndMonthAndDay(userId, year, month, day)
+        if (entity == null) {
+            throw DefaultErrorException(ErrorsDetails(8000, "Article not found"))
+        }
+        return ArticleDto(entity!!.dailylogId!!, entity!!.emotion, entity!!.dailylogUpdateTime, entity!!.article)
     }
 
     fun postArticle(resDto: PostArticleDto, header: HeaderDTO) {
         val calendar = Calendar.getInstance()
         calendar.time = Date.from(resDto.time.atZone(ZoneId.of(header.timeZone)).toInstant())
-        val weekDay = calendar.get(Calendar.DAY_OF_WEEK)
         val year = calendar.get(Calendar.YEAR)
         val month = (calendar.get(Calendar.MONTH) + 1) % 13
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        calendar.add(Calendar.DATE, -(weekDay - 1)) //etc
-        val userId = loginRepository.findFirstByUid(header.uid!!).userId!!
-        val remindId: Long = 1//remindRepository
-        val article = ArticleEntity(resDto.article, resDto.emotion, year, month, day, resDto.time, LocalDateTime.now(), LocalDateTime.now(), userId, remindId)
+        val userEntity = loginRepository.findFirstByUid(header.uid!!)
+        if (userEntity == null) {
+            throw DefaultErrorException(ErrorsDetails(9000, "User not found"))
+        }
+        val userId = userEntity!!.userId!!
+
+        val startDate = getStartDate(calendar)
+        var remindEntity: RemindEntity? = remindRepository.findFirstByStartDate(startDate)
+        if (remindEntity == null) {
+            remindEntity = RemindEntity(startDate, getEndDate(calendar), userId)
+            remindRepository.save(remindEntity)
+        } else {
+            remindEntity.isUpdated = true
+            remindRepository.save(remindEntity)
+        }
+        val article = ArticleEntity(resDto.article, resDto.emotion, year, month, day, resDto.time, LocalDateTime.now(), LocalDateTime.now(), userId, remindEntity!!.remindId!!)
         articleRepository.save(article)
     }
 
     fun deleteArticle(dailylogId: Long, header: HeaderDTO) {
         val entity = articleRepository.findFirstByDailylogId(dailylogId = dailylogId)
+        if (entity == null) {
+            throw DefaultErrorException(ErrorsDetails(8000, "Article not found"))
+        }
         articleRepository.delete(entity)
     }
 
     fun editArticle(articleDto: ArticleDto, header: HeaderDTO): ArticleDto {
         val result = articleRepository.findFirstByDailylogId(dailylogId = articleDto.dailylogId)
+        if (result == null) {
+            throw DefaultErrorException(ErrorsDetails(8000, "Article not found"))
+        }
         result.emotion = articleDto.emotion
         result.article = articleDto.article
         result.dailylogDate = articleDto.time

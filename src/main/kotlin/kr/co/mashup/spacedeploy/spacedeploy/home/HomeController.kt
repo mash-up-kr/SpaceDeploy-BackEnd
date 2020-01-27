@@ -19,6 +19,6 @@ class HomeController(val homeService : HomeService){
     fun getHomeList (@RequestParam year :Int, request: HttpServletRequest): ResponseEntity<ResultRes> {
         val header = getHeader(request)
 
-        return ResponseEntity.status(HttpStatus.OK).body(homeService.getHome(year))
+        return ResponseEntity.status(HttpStatus.OK).body(homeService.getHome(header, year))
     }
 }

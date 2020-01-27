@@ -44,7 +44,10 @@ www.spacedeploy.pw
 ```
 Authorization: token
 Provider: facebook | kakao |instgram
-TimeZone: ex) Asia/Seoul
+TimeZone: ex) Asia/Seoul음
+
+------
+test계정: provider: kakao, token: spacedeploy123456
 ```
 
 ### Time Formmat 
@@ -66,11 +69,16 @@ TimeZone: ex) Asia/Seoul
 - 1001: 헤더에 토큰이 없음
 - 1002: 헤더에 프로바이더가 없음
 - 1003: 헤더에 타임존이 없음
+- 1010: 타임존 형식이 잘못되었음
 
 - 4000: UID를 가져오는데 문제 생김 (Token, Provider 확인)
 - 4001: 알수없는 Provider 위에 입력된 프로바이더중 입력
 
-- 9000: 해당 User를 찾을음 수 없
+- 7000: 작성한 글이 없음
+- 7001: 해당 회고가 없음
+
+- 8000: 해당 글을 찾을수 없음
+- 9000: 해당 User를 찾을 수 없음
                     """)
                 .version("1.0.0")
                 .build()

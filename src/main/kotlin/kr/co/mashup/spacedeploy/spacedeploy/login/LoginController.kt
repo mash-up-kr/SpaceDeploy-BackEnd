@@ -3,7 +3,6 @@ package kr.co.mashup.spacedeploy.spacedeploy.login
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import kr.co.mashup.spacedeploy.spacedeploy.Header.getHeader
-import kr.co.mashup.spacedeploy.spacedeploy.oauth.getUID
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

@@ -4,26 +4,22 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 data class SpecificRemindListDto(
-        val date: LocalDateTime,
-        val remind: ArrayList<RemindListDto>?
-)
-
-data class EditRemindDto(
-        val remindId: Long
+        val remind: List<RemindListDto>
 )
 
 data class RemindListDto(
         val remindId: Long,
-        val bestEmotion: Int,
+        val bestEmotion: Int?,
         val startDate: LocalDateTime,
         val endDate: LocalDateTime,
         val title: String?,
-        val command: String?
+        val command: String?,
+        val isUpdated: Boolean
 )
 
 data class RemindDto(
         val remindId: Long,
-        val emotionRank: ArrayList<EmotionCount>?,
+        val emotionRank: List<EmotionCount?>,
         val startDate: LocalDateTime,
         val endDate: LocalDateTime,
         val title: String?,
@@ -36,55 +32,53 @@ data class EmotionCount(
 )
 
 data class PostRemindDto(
-        val startDate: LocalDateTime,
-        val endDate: LocalDateTime,
+        val remindId: Long,
         val title: String?,
         val command: String?
 )
 
+
+data class DefaultRemindDto(
+        val remindId: Long
+)
 @Entity
 @Table(name = "REMIND")
 data class RemindEntity(@Id
-                      @GeneratedValue(strategy = GenerationType.IDENTITY)
-                      var userId: Long? = null,
-                      var uid: String,
-                      var email: String? = null,
-                      var password: String? = null,
-                      var nickname: String? = null,
-                      var name: String? = null,
-                      var token: String? = null,
-                      var pushToken: String? = null,
-                      var userCreateTime: LocalDateTime,
-                      var userUpdateTime: LocalDateTime) {
+                        @GeneratedValue(strategy = GenerationType.IDENTITY)
+                        var remindId: Long? = null,
+                        var command: String? = null,
+                        var remindCreateTime: LocalDateTime,
+                        var remindUpdateTime: LocalDateTime,
+                        var title: String? = null,
+                        var bestEmotion: Int? = null,
+                        var startDate: LocalDateTime,
+                        var endDate: LocalDateTime,
+                        var userId: Long? = null,
+                        var isUpdated: Boolean = true) {
     constructor() : this(
-            null,
-            "temp",
-            null,
-            null,
-            null,
-            null,
             null,
             null,
             LocalDateTime.now(),
-            LocalDateTime.now())
-
-    constructor(uid: String,
-                email: String?,
-                password: String?,
-                nickname: String?,
-                name: String?,
-                token: String?,
-                pushToken: String?,
-                userCreateTime: LocalDateTime,
-                userUpdateTime: LocalDateTime) : this(
+            LocalDateTime.now(),
             null,
-            uid,
-            email,
-            password,
-            nickname,
-            name,
-            token,
-            pushToken,
-            userCreateTime,
-            userUpdateTime)
+            null,
+            LocalDateTime.now(),
+            LocalDateTime.now(),
+            null,
+            true)
+
+    constructor(startDate: LocalDateTime,
+                endDate: LocalDateTime,
+                userId: Long?) : this(
+            null,
+            null,
+            LocalDateTime.now(),
+            LocalDateTime.now(),
+            null,
+            null,
+            startDate,
+            endDate,
+            userId,
+            true
+    )
 }

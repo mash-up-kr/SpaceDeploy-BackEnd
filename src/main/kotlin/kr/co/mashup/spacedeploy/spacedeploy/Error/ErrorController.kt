@@ -10,8 +10,24 @@ import java.lang.RuntimeException
 
 @RestControllerAdvice
 class ControllerAdviceRequestError: ResponseEntityExceptionHandler() {
+    @ExceptionHandler(value = [(RuntimeException::class)])
+    fun handleDefaultErrorProvider(ex: RuntimeException,request: WebRequest): ResponseEntity<ErrorsDetails> {
+        val errorDetails = ErrorsDetails(-9999,
+                ex.message!!
+        )
+        return ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(value = [(DefaultErrorException::class)])
+    fun handleDefaultErrorProvider(ex: DefaultErrorException,request: WebRequest): ResponseEntity<ErrorsDetails> {
+        val errorDetails = ErrorsDetails(ex.error.code,
+                ex.error.message
+        )
+        return ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST)
+    }
+
     @ExceptionHandler(value = [(UserException::class)])
-    fun handleUnknownProvider(ex: UserException,request: WebRequest): ResponseEntity<ErrorsDetails> {
+    fun handleErrorProvider(ex: UserException,request: WebRequest): ResponseEntity<ErrorsDetails> {
         val errorDetails = ErrorsDetails(ex.error.code,
                 ex.error.message
         )
@@ -42,6 +58,7 @@ class ControllerAdviceRequestError: ResponseEntityExceptionHandler() {
         return ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST)
     }
 }
+class DefaultErrorException(val error: ErrorsDetails): RuntimeException()
 class UserException(val error: ErrorsDetails): RuntimeException()
 class UnknownProviderException(val error: ErrorsDetails): RuntimeException()
 class TokenErrorException(val error: ErrorsDetails): RuntimeException()
