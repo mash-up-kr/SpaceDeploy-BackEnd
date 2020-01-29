@@ -30,8 +30,8 @@ fun getHeader(request: HttpServletRequest): HeaderDTO {
         }
         val topic = Gson().fromJson(uid, Json4Kotlin_Base::class.java)
         println(uid)
-        print(topic.id)
-        val header = HeaderDTO(topic.id.toString(), timeZone, token)
+        print(provider + topic.id)
+        val header = HeaderDTO(provider + topic.id.toString(), timeZone, token)
         return header
     }
 }
