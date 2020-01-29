@@ -1,5 +1,7 @@
 package kr.co.mashup.spacedeploy.spacedeploy.Header
 
+import Json4Kotlin_Base
+import com.google.gson.Gson
 import kr.co.mashup.spacedeploy.spacedeploy.Error.ErrorsDetails
 import kr.co.mashup.spacedeploy.spacedeploy.Error.HeaderNullException
 import kr.co.mashup.spacedeploy.spacedeploy.Error.TokenErrorException
@@ -26,8 +28,10 @@ fun getHeader(request: HttpServletRequest): HeaderDTO {
         if (uid == null) {
             throw TokenErrorException(ErrorsDetails(4000, "Error getting uid. check Token & Provider"))
         }
-
-        val header = HeaderDTO(uid, timeZone, token)
+        val topic = Gson().fromJson(uid, Json4Kotlin_Base::class.java)
+        println(uid)
+        print(topic.id)
+        val header = HeaderDTO(topic.id.toString(), timeZone, token)
         return header
     }
 }
