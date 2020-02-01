@@ -31,10 +31,10 @@ class ArticleService(val articleRepository: ArticleRepository, val loginReposito
 
     fun postArticle(resDto: PostArticleDto, header: HeaderDTO) {
         if (resDto.emotion > 7) {
-            throw DefaultErrorException(ErrorsDetails())
+            throw DefaultErrorException(ErrorsDetails(7002, "Emotion value cannot exceed 7"))
         }
         val calendar = Calendar.getInstance()
-        calendar.time = Date.from(resDto.time.atZone(ZoneId.of(header.timeZone)).toInstant())
+        calendar.time = Date.from(resDto.time.atZone(ZoneId.of("UTC")).toInstant())
         val year = calendar.get(Calendar.YEAR)
         val month = (calendar.get(Calendar.MONTH) + 1) % 13
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -61,7 +61,7 @@ class ArticleService(val articleRepository: ArticleRepository, val loginReposito
     fun deleteArticle(dailylogId: Long, header: HeaderDTO) {
         val entity = articleRepository.findFirstByDailylogId(dailylogId = dailylogId)
         if (entity == null) {
-            throw DefaultErrorException(ErrorsDetails(7002, "Emotion value cannot exceed 7"))
+            throw DefaultErrorException(ErrorsDetails(8000, "Article not found"))
         }
         articleRepository.delete(entity)
     }
