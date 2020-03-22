@@ -29,7 +29,7 @@ class ArticleController(val articleService: ArticleService) {
     }
 
     @ApiOperation(value = "감정기록 삭제", notes = "지정한 감정기록을 삭제합니다.")
-    @DeleteMapping()
+    @DeleteMapping("/{dailyLogId}")
     fun deleteArticle(@PathVariable dailyLogId: Long, request: HttpServletRequest) {
         val header = getHeader(request)
         ResponseEntity.status(HttpStatus.OK).body(articleService.deleteArticle(dailyLogId, header))
